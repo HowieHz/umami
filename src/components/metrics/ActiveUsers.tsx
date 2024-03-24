@@ -7,7 +7,7 @@ import styles from './ActiveUsers.module.css';
 export function ActiveUsers({
   websiteId,
   value,
-  refetchInterval = 60000,
+  refetchInterval = 1000,
 }: {
   websiteId: string;
   value?: number;
