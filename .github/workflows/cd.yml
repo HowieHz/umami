@@ -92,11 +92,14 @@ jobs:
         run: |
           TAGS="${{ steps.compute.outputs.tags }}"
 
+          # Normalize repository name to lowercase for registries that require it
+          REPO_LOWER=$(echo "$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]')
+
           # Set image targets conditionally
-          if [[ "${{ github.repository }}" == "umami-software/umami" ]]; then
-            IMAGES=("umamisoftware/umami" "ghcr.io/${{ github.repository }}")
+          if [[ "$GITHUB_REPOSITORY" == "umami-software/umami" ]]; then
+            IMAGES=("umamisoftware/umami" "ghcr.io/${REPO_LOWER}")
           else
-            IMAGES=("ghcr.io/${{ github.repository }}")
+            IMAGES=("ghcr.io/${REPO_LOWER}")
           fi
 
           for IMAGE in "${IMAGES[@]}"; do
